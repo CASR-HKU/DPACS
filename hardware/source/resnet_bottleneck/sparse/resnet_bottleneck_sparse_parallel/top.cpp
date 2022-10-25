@@ -39,7 +39,7 @@ void wrapper(
     hls::stream<BundleT<PO_1, T_F> > f_pool;
 #pragma HLS STREAM variable=f_pool depth=2
     hls::stream<BundleT<PO_1, T_F> > fres_s;
-#pragma HLS STREAM variable=fres_s depth=2
+#pragma HLS STREAM variable=fres_s depth=4
 
 
 	hls::stream<T_K > in_key0;
@@ -224,14 +224,14 @@ void wrapper(
     );
 
 
-    adjust_stream_same<PO_3, PI_1>
-    (
-        f_3_out,
-        f_1_in,
-        out_key3,
-        in_key1,
-        OC_3
-    );
+    // adjust_stream_same<PO_3, PI_1>
+    // (
+    //     f_3_out,
+    //     f_1_in,
+    //     out_key3,
+    //     in_key1,
+    //     OC_3
+    // );
 
 
     T_H out_width = stride2 ? Width >> 1: Width;
@@ -241,9 +241,9 @@ void wrapper(
 
     conv1x1_dsp_residual<PI_1, PO_1, 512, 2048>
     (
-        f_1_in,
+        f_3_out,
         f_1_out,
-        in_key1,
+        out_key3,
         out_key1,
         fres_s,
         w_1_s,
