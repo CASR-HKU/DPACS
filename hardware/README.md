@@ -58,15 +58,11 @@ drive | Contains bitstreams and jupyter notebooks to run on-board hardware test
 | Model | Implementation | Latency | 
 | --- | --- | --- |
 | ResNet-18 | Serial | 25.6 ms |
-| ResNet-18 | Parallel | 14.3 ms |
 | ResNet-34 | Serial | 48.9 ms |
-| ResNet-34 | Parallel | 24.5 ms |
 
 
 ### Basicblock DPUnit
 | Model | Implementation | s25-c25 | s50-c50 | s75-c75| 
 | --- | --- | --- | --- | --- |
 | ResNet-18 | Serial | 22.1 ms | 17.1ms | 13.3 ms |
-| ResNet-18 | Parallel | 16.3 ms | 14.7ms | 13.3 ms |
 | ResNet-34 | Serial | 39.4 ms | 28.3ms | 20.1 ms |
-| ResNet-34 | Parallel | 27.2 ms | 23.3ms | 20.1 ms |
