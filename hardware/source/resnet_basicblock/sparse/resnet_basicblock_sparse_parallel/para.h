@@ -52,9 +52,8 @@ struct BundleT {
 
 
 
-
-#define MW (CPRUNE_FACTOR * WW)
 #define CPRUNE_FACTOR 32 
+#define MW (CPRUNE_FACTOR * WW)
 #define W_FACTOR CPRUNE_FACTOR
 typedef ap_uint<MW> T_MASK;
 

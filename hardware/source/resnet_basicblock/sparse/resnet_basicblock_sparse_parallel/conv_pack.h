@@ -19,27 +19,23 @@ void conv3x3_dsp(
 #pragma HLS Dataflow
 	
 	hls::stream<BundleT<PO3, T_P> > s_conv3;
-#pragma HLS STREAM variable=s_conv3 depth=2
-
+#pragma HLS STREAM variable=s_conv3 depth=16
 	hls::stream<BundleT<9, ap_int<PI * FW> > > fmap_win;
-#pragma HLS STREAM variable=fmap_win depth=2 
-
-	hls::stream<BundleT<PI, T_F> > fmap_serial;
-#pragma HLS STREAM variable=fmap_serial depth=2 
+#pragma HLS STREAM variable=fmap_win depth=16 
 
 
 	hls::stream<T_K > key_0;
-#pragma HLS STREAM variable=key_0 depth=2
+#pragma HLS STREAM variable=key_0 depth=4
 
 	hls::stream<T_K > key_1;
-#pragma HLS STREAM variable=key_1 depth=2
+#pragma HLS STREAM variable=key_1 depth=4
 
 	hls::stream<T_K > key_conv;
 #pragma HLS STREAM variable=key_conv depth=4
 
 
 	hls::stream<T_OFFSET> offset_s;
-#pragma HLS STREAM variable=key_conv depth=4
+#pragma HLS STREAM variable=key_conv depth=18
 
 
 	T_Q q_buffer[MAX_C];
@@ -215,26 +211,23 @@ void conv3x3_dsp_res(
 #pragma HLS Dataflow
 	
 	hls::stream<BundleT<PO3, T_P> > s_conv3;
-#pragma HLS STREAM variable=s_conv3 depth=2
+#pragma HLS STREAM variable=s_conv3 depth=16
 
 	hls::stream<BundleT<9, ap_int<PI * FW> > > fmap_win;
-#pragma HLS STREAM variable=fmap_win depth=2 
-
-	hls::stream<BundleT<PI, T_F> > fmap_serial;
-#pragma HLS STREAM variable=fmap_serial depth=2 
+#pragma HLS STREAM variable=fmap_win depth=16 
 
 
 	hls::stream<T_K > key_0;
-#pragma HLS STREAM variable=key_0 depth=2
+#pragma HLS STREAM variable=key_0 depth=4
 
 	hls::stream<T_K > key_1;
-#pragma HLS STREAM variable=key_1 depth=2
+#pragma HLS STREAM variable=key_1 depth=4
 
 	hls::stream<T_K > key_conv;
 #pragma HLS STREAM variable=key_conv depth=4
 
 	hls::stream<T_OFFSET> offset_s;
-#pragma HLS STREAM variable=key_conv depth=4
+#pragma HLS STREAM variable=key_conv depth=18
 
 
 	hls::stream<T_K > key_res_in;
