@@ -14,7 +14,6 @@ import pickle
 
 __all__ = ['resnet_basicblock_dense']
 
-
 class resnet_basicblock_dense_drive:
     def __init__(self, bitfile):
         self.overlay = Overlay(bitfile)
@@ -220,6 +219,9 @@ class resnet_basicblock_dense(resnet_basicblock_dense_drive):
             use_mask = 1 if (layer_count > 0 and self.share_mask) else 0
             self.basicblock(self.inplanes, planes, stride, self.base_width)
             layer_count += 1
+        elif stride == 1:
+            self.basicblock(self.inplanes, planes, stride, self.base_width)
+            
         self.inplanes = planes * self.expansion
 
         for _ in range(1, blocks):

@@ -337,6 +337,8 @@ class resnet_basicblock_sparse(resnet_basicblock_sparse_drive):
             use_mask = 1 if (layer_count > 0 and self.share_mask) else 0
             self.basicblock(self.inplanes, planes, stride, self.base_width, use_mask=use_mask, use_cprune=use_cprune, enable_pool=enable_pool)
             layer_count += 1
+        elif stride == 1:
+            self.basicblock(self.inplanes, planes, stride, self.base_width)
         self.inplanes = planes * self.expansion
 
         for _ in range(1, blocks):

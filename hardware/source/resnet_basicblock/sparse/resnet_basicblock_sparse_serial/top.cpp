@@ -22,66 +22,66 @@ void wrapper(
 #pragma HLS DATAFLOW
 
     hls::stream<BundleT<PI_0, T_F> > fin_s;
-#pragma HLS STREAM variable=fin_s depth=2
+#pragma HLS STREAM variable=fin_s depth=16
     hls::stream<BundleT<PI_0, T_F> > f_first_in;
-#pragma HLS STREAM variable=f_first_in depth=2
+#pragma HLS STREAM variable=f_first_in depth=16
     hls::stream<BundleT<PI_0, T_F> > f_first_out;
-#pragma HLS STREAM variable=f_first_out depth=2
+#pragma HLS STREAM variable=f_first_out depth=16
     hls::stream<BundleT<PI_0, T_F> > f_0_in;
-#pragma HLS STREAM variable=f_0_in depth=2
+#pragma HLS STREAM variable=f_0_in depth=16
     hls::stream<BundleT<PO_0, T_F> > f_0_out;
-#pragma HLS STREAM variable=f_0_out depth=2
+#pragma HLS STREAM variable=f_0_out depth=16
 
     hls::stream<BundleT<PI_3, T_F> > f_3_in;
-#pragma HLS STREAM variable=f_3_in depth=2
+#pragma HLS STREAM variable=f_3_in depth=16
     hls::stream<BundleT<PO_3, T_F> > f_3_out;
-#pragma HLS STREAM variable=f_3_out depth=2
+#pragma HLS STREAM variable=f_3_out depth=16
 
     hls::stream<BundleT<PI_1, T_F> > f_1_in;
-#pragma HLS STREAM variable=f_1_in depth=2
+#pragma HLS STREAM variable=f_1_in depth=16
     hls::stream<BundleT<PO_1, T_F> > f_1_out;
-#pragma HLS STREAM variable=f_1_out depth=2
+#pragma HLS STREAM variable=f_1_out depth=16
     hls::stream<BundleT<PO_1, T_F> > f_pool;
-#pragma HLS STREAM variable=f_pool depth=2
+#pragma HLS STREAM variable=f_pool depth=16
     hls::stream<BundleT<PO_1, T_F> > fres_s;
-#pragma HLS STREAM variable=fres_s depth=2
+#pragma HLS STREAM variable=fres_s depth=16
 
 	hls::stream<T_K > key_first_in;
-#pragma HLS STREAM variable=key_first_in depth=2
+#pragma HLS STREAM variable=key_first_in depth=4
 	hls::stream<T_K > key_first_out;
-#pragma HLS STREAM variable=key_first_out depth=2
+#pragma HLS STREAM variable=key_first_out depth=4
 	hls::stream<T_K > in_key0;
-#pragma HLS STREAM variable=in_key0 depth=2
+#pragma HLS STREAM variable=in_key0 depth=4
 	hls::stream<T_K > out_key0;
-#pragma HLS STREAM variable=out_key0 depth=2
+#pragma HLS STREAM variable=out_key0 depth=4
 	hls::stream<T_K > in_key3;
-#pragma HLS STREAM variable=in_key3 depth=2
+#pragma HLS STREAM variable=in_key3 depth=4
 	hls::stream<T_K > out_key3;
-#pragma HLS STREAM variable=out_key3 depth=2
+#pragma HLS STREAM variable=out_key3 depth=4
 	hls::stream<T_K > in_key1;
-#pragma HLS STREAM variable=in_key1 depth=2
+#pragma HLS STREAM variable=in_key1 depth=4
 	hls::stream<T_K > out_key1;
-#pragma HLS STREAM variable=out_key1 depth=2
+#pragma HLS STREAM variable=out_key1 depth=4
 	hls::stream<T_K > key_pool;
-#pragma HLS STREAM variable=key_pool depth=2
+#pragma HLS STREAM variable=key_pool depth=4
 	hls::stream<T_K > key_mask;
-#pragma HLS STREAM variable=key_mask depth=2
+#pragma HLS STREAM variable=key_mask depth=4
 
 
     hls::stream<ap_int<W_FACTOR * WW> > weight_s;
-#pragma HLS STREAM variable=weight_s depth=2
+#pragma HLS STREAM variable=weight_s depth=4
     hls::stream<ap_int<P4 * WW> > w_first_s;
-#pragma HLS STREAM variable=w_first_s depth=3
+#pragma HLS STREAM variable=w_first_s depth=2
     hls::stream<ap_int<PI_0 * WW> > w_mask_s;
 #pragma HLS STREAM variable=w_mask_s depth=2
     hls::stream<ap_int<PI_0 * WW> > w_0_s;
-#pragma HLS STREAM variable=w_0_s depth=2
+#pragma HLS STREAM variable=w_0_s depth=3
     hls::stream<ap_int<PI_3 * WW> > w_3_s;
-#pragma HLS STREAM variable=w_3_s depth=2
+#pragma HLS STREAM variable=w_3_s depth=5
     hls::stream<ap_int<PI_1 * WW> > w_1_s;
-#pragma HLS STREAM variable=w_1_s depth=2
+#pragma HLS STREAM variable=w_1_s depth=7
     hls::stream<ap_int<PO_1 * WW> > fc_s;
-#pragma HLS STREAM variable=fc_s depth=2
+#pragma HLS STREAM variable=fc_s depth=9
 
     hls::stream<T_MASK > mask_s;
 #pragma HLS STREAM variable=mask_s depth=2
