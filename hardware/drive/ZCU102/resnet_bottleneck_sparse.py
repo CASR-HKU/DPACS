@@ -353,17 +353,19 @@ class resnet_bottleneck_sparse(resnet_bottleneck_sparse_drive):
             self.run(self.H, self.W, IC, width, width, OC, next_c=width, nz_ratio=self.nz_ratio, cp_ratio=self.cp_ratio, stride2=1, res=1, use_mask=use_mask, use_cprune=use_cprune, enable_pool=enable_pool)
             self.H, self.W = self.H // 2, self.W // 2
 
-            
-    def run_2048(self, stride2=0): # The last stage of ResNet exceed the maximum on-chip buffer size, so we split it into multiple kernel calls 
+    # The last stage of ResNet exceed the maximum on-chip buffer size, so we split it into multiple kernel calls 
+    # TODO: add sparse weight reader
+    def run_2048(self, stride2=0): 
+        cp_ratio = self.cp_ratio
         if stride2 == 0:
             if self.share_mask:
                 use_mask = 1
             else:
                 use_mask = 0
-            self.run(self.H, self.W, 2048, 512, 512, 512, 512, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256,  skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=stride2)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256,  skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=stride2)
-            self.run(self.H, self.W, 512, 512, 512, 2048, 512, skip_0=1, skip_3=1, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=0)            
+            self.run(self.H, self.W, 2048, 512*cp_ratio, 512*cp_ratio, 512*cp_ratio, 512*cp_ratio, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio,  skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=stride2)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio,  skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=stride2)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 512*cp_ratio, 2048, 512, skip_0=1, skip_3=1, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=0)            
         
         else:
             mask_stride2 = np.zeros([self.batch, self.H, self.W], dtype=np.uint8)
@@ -373,11 +375,11 @@ class resnet_bottleneck_sparse(resnet_bottleneck_sparse_drive):
             self.run(self.H, self.W, 1024, 512, 512, 512, 512, skip_3=1, skip_1=1, mask=mask_stride2, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
             self.run(self.H, self.W, 1024, 512, 512, 512, 512, skip_3=1, skip_1=1, mask=mask_stride2, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
             
-            self.run(self.H, self.W, 2048, 512, 512, 512, 512, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=0, nz_ratio=self.nz_ratio, res=0)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=1)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=1)
+            self.run(self.H, self.W, 2048, 512*cp_ratio, 512*cp_ratio, 512*cp_ratio, 512, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=0, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=1)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0, stride2=1)
             self.H, self.W = self.H // 2, self.W // 2
-            self.run(self.H, self.W, 512, 512, 512, 2048, 512, skip_0=1, skip_3=1, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=0)            
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 512*cp_ratio, 2048, 512, skip_0=1, skip_3=1, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=0)            
             
     
     def last_block(self):

@@ -405,27 +405,30 @@ class resnet_basicblock_sparse(resnet_basicblock_sparse_drive):
             
             self.H, self.W = self.H // 2, self.W // 2
 
-    
-    def run_512(self, stride2=0): # The last stage of ResNet exceed the maximum on-chip buffer size, so we split it into multiple kernel calls 
+    # The last stage of ResNet exceed the maximum on-chip buffer size, so we split it into multiple kernel calls 
+    # TODO: use sparse weights reader
+    def run_512(self, stride2=0): 
+        
+        cp_ratio = self.cp_ratio
         if stride2 == 0:
             if self.share_mask:
                 use_mask = 1
             else:
                 use_mask = 0
-            self.run(self.H, self.W, 512, 256, 256, 256, 256, stride2=0, skip_0=0, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
-            self.run(self.H, self.W, 512, 256, 256, 256, 256, stride2=0, skip_0=0, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, stride2=0, skip_0=1, skip_3=0, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=1)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, stride2=0, skip_0=1, skip_3=0, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=1)
+            self.run(self.H, self.W, 512, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, stride2=0, skip_0=0, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 512, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, stride2=0, skip_0=0, skip_3=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256, 256, 256, stride2=0, skip_0=1, skip_3=0, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=1)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256, 256, 256, stride2=0, skip_0=1, skip_3=0, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=use_mask, nz_ratio=self.nz_ratio, res=1)
         else:
             # TODO: solftware downsample of feature
             self.run(self.H//2, self.W//2, 256, 256, 256, 256, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
             self.run(self.H//2, self.W//2, 256, 256, 256, 256, 256, skip_0=1, skip_1=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
 
-            self.run(self.H, self.W, 256, 256, 256, 256, 256, skip_0=0, skip_3=1, skip_1=1, stride2=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=0, nz_ratio=self.nz_ratio, res=0)
-            self.run(self.H, self.W, 256, 256, 256, 256, 256, skip_0=0, skip_3=1, skip_1=1, stride2=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 256, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, skip_0=0, skip_3=1, skip_1=1, stride2=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=0, nz_ratio=self.nz_ratio, res=0)
+            self.run(self.H, self.W, 256, 256*cp_ratio, 256*cp_ratio, 256*cp_ratio, 256, skip_0=0, skip_3=1, skip_1=1, stride2=1, cp_ratio=self.cp_ratio, enable_pool=0, use_mask=1, nz_ratio=self.nz_ratio, res=0)
             self.H, self.W = self.H // 2, self.W // 2 
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, skip_0=1, skip_3=0, skip_1=1, stride2=0, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=1)
-            self.run(self.H, self.W, 512, 512, 256, 256, 256, skip_0=1, skip_3=0, skip_1=1, stride2=0, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=1)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256, 256, 256, skip_0=1, skip_3=0, skip_1=1, stride2=0, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=1)
+            self.run(self.H, self.W, 512*cp_ratio, 512*cp_ratio, 256, 256, 256, skip_0=1, skip_3=0, skip_1=1, stride2=0, cp_ratio=self.cp_ratio, enable_pool=1, use_mask=1, nz_ratio=self.nz_ratio, res=1)
                        
             
     def last_block(self, n=3):
