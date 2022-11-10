@@ -3,6 +3,9 @@
 
 ![image](DPACS.jpg)
 
+### For artifact evaluation
+sh evaluate_asplos.sh
+
 ### Requirements
 
 The codes are tested on Ubuntu 18.04 with CUDA 10.2
@@ -233,8 +236,8 @@ Some important arguments:
     </tr>
     <tr>
         <td>s50-c50</td>
-        <td>70.14</td>
-        <td>1.97E9</td>
+        <td>68.34</td>
+        <td>1.65E9</td>
     <tr>
         <td rowspan="1">Mobilenet</td>
         <td>s25-c25</td>

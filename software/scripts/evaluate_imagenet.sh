@@ -1,6 +1,7 @@
 python main_imagenet.py --dataset-root $1 --pooling_method ave --budget 0.50 --group_size 64 --channel_budget 0.50 --channel_stage 2 3 --batchsize $2 --model_cfg hardware_2048 --load DPACS_checkpoint/imagenet_resnet101_BlockMask/s50_c50.pth -e
 python main_imagenet.py --dataset-root $1 --pooling_method ave --budget 0.75 --group_size 64 --channel_budget 0.75 --channel_stage 2 3 --batchsize $2 --model_cfg hardware_2048 --load DPACS_checkpoint/imagenet_resnet101_BlockMask/s75_c75.pth -e
-$2
+python main_imagenet.py --dataset-root $1 --pooling_method ave --budget 0.25 --group_size 64 --channel_budget 0.25 --channel_stage 2 3 --batchsize $2 --model_cfg hardware_2048 --load DPACS_checkpoint/imagenet_resnet101_BlockMask/s25_c25.pth -e
+
 python main_imagenet.py --dataset-root $1 --pooling_method ave --budget 0.50 --group_size 64 --channel_budget 0.50 --channel_stage 2 3 --batchsize $2 --model_cfg hardware_2048 --resolution_mask --load DPACS_checkpoint/imagenet_resnet101_ResolutionMask/s50_c50.pth -e
 python main_imagenet.py --dataset-root $1 --pooling_method ave --budget 0.75 --group_size 64 --channel_budget 0.75 --channel_stage 2 3 --batchsize $2 --model_cfg hardware_2048 --resolution_mask --load DPACS_checkpoint/imagenet_resnet101_ResolutionMask/s75_c75.pth -e
 
