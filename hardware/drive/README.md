@@ -8,5 +8,9 @@ To run the test, zip the entire folder and upload to the board using the jupyter
 ```
     tar -cvzf ZCU102.tar.gz ./ZCU102
 ```
+If you have GUI running on your machine to synthesis the bitstream files and it can also access your FPGA board, you can directly upload the files to the board. Otherwise, you might need to first prepare the files and copied to whatever PC/server that can connect to the FPGA board. Then upload using the jupyter server powered by PYNQ.
+
+![image](jupyter1.jpg)
+
 
 More about PYNQ see [here](https://pynq.readthedocs.io/en/v2.6.1/).

@@ -141,3 +141,7 @@ dmypy.json
 *.zip
 
 tvm/
+
+log/
+
+log.txt

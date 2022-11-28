@@ -1,7 +1,0 @@
--------------start testing dense input--------------
-flags: 464
-Comparing with TXT_FILES_dense_out_1.txt
-Passed dense tb!
--------------end testing dense input--------------
-
-The maximum depth reached by any of the 20 hls::stream() instances in the design is 4608

@@ -28,4 +28,4 @@ To regenerate hardware design, run the following command:
 ```
     make all
 ```
-The output bitstream will also be copied to the drive folder. 
+The output bitstream will also be copied to the drive folder. Logs are stored in the ./log folder.
